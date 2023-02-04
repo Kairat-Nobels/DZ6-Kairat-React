@@ -2,7 +2,10 @@ import React from 'react'
 
 function Comments({ comment }) {
   return (
-    <p>{comment}</p>
+    <>
+      {comment.map(item => <p id={item.id}>{item.body}</p>
+      )}
+    </>
   )
 }
 

@@ -9,6 +9,7 @@ function Posts()
     const [posts, setPosts] = useState([])
     const [clickedPostId, setClickedPostId] = useState(0)
     const [finish, setFinish] = useState(false)
+    const [comments, setComments] = useState([])
 
     useEffect(() =>
     {
@@ -20,7 +21,12 @@ function Posts()
     const handleOnClik = (idsnik) =>
     {
         if (clickedPostId === idsnik) setClickedPostId(0)
-        else setClickedPostId(idsnik)
+        else {
+            setClickedPostId(idsnik)
+            API.get(`posts/${idsnik}/comments`).then(
+                resp => setComments(resp.data)
+            )
+        }
     }
 
     return (
@@ -33,7 +39,7 @@ function Posts()
                                 <p>{p.title} </p>
                                 <button onClick={() => handleOnClik(p.id)}>Comment</button>
                             </div>
-                            {(p.id === clickedPostId) && <Comments comment={p.body} />}
+                            {(p.id === clickedPostId) && <Comments comment={comments} />}
                         </li>
                     )}
                 </ul>
